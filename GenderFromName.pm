@@ -10,7 +10,7 @@ package Text::GenderFromName;
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 # 
-# Version 0.101.  Module list status is "Rdpf."
+# Version 0.102.  Module list status is "Rdpf."
 
 require 5;
 
@@ -83,17 +83,18 @@ sub gender {
     my ($name) = @_;
     # Special cases added by orwant 
     return "m" if $name =~ /^Joh?n/; # Jon and John 
-    return "m" if $name =~ /^Pas(c|qu)al$/; # Pascal and Pasqual
     return "m" if $name =~ /^Th?o(m|b)/; # Tom and Thomas and Tomas and Toby
     return "m" if $name =~ /^Frank/; 
-    return "m" if $name =~ /^Walt/;
-    return "m" if $name =~ /^Ron/;
     return "m" if $name =~ /^Bil/;
-    return "m" if $name =~ /^Anfernee/;
+    return "m" if $name =~ /^Hans/;
+    return "m" if $name =~ /^Ron/;
+    return "f" if $name =~ /^Ro(z|s)/;
+    return "m" if $name =~ /^Walt/;
     return "m" if $name =~ /^Krishna/;
     return "f" if $name =~ /^Tri(c|sh)/; 
-    return "f" if $name =~ /^Ro(z|s)/;
+    return "m" if $name =~ /^Pas(c|qu)al$/; # Pascal and Pasqual
     return "f" if $name =~ /^Ellie/;
+    return "m" if $name =~ /^Anfernee/;
 
     # Rules from original code
     $gender = "f" if $name =~ /^.*[aeiy]$/;    # most names ending in a/e/i/y are female
