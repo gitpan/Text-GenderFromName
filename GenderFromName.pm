@@ -10,7 +10,7 @@ package Text::GenderFromName;
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 # 
-# Version 0.1.  Module list status is "Rdpf."
+# Version 0.101.  Module list status is "Rdpf."
 
 require 5;
 
@@ -70,8 +70,9 @@ The Perl Journal and MIT Media Lab
 
 orwant@tpj.com
 
-This is an adaptation of an awk script by Scott Pakin 8/91 in CLM
-12/91.  (I have no idea what CLM is.)
+This is an adaptation of an 8/91 awk script by Scott Pakin in the December 91 issue of Computer Language Monthly.
+
+Small contributions by Andrew Langmead and John Strickler.
 
 =cut
 
@@ -86,6 +87,8 @@ sub gender {
     return "m" if $name =~ /^Th?o(m|b)/; # Tom and Thomas and Tomas and Toby
     return "m" if $name =~ /^Frank/; 
     return "m" if $name =~ /^Walt/;
+    return "m" if $name =~ /^Ron/;
+    return "m" if $name =~ /^Bil/;
     return "m" if $name =~ /^Anfernee/;
     return "m" if $name =~ /^Krishna/;
     return "f" if $name =~ /^Tri(c|sh)/; 
