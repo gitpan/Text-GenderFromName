@@ -17,7 +17,7 @@ use vars qw(@ISA @EXPORT @EXPORT_OK $VERSION);
 @ISA = qw(Exporter);
 @EXPORT = qw(&gender);
 @EXPORT_OK = qw(&gender_init);
-$VERSION = '0.31';
+$VERSION = '0.32';
 
 =head1 NAME
 
@@ -436,6 +436,12 @@ our @MATCH_LIST = ('one_only',
                    'v2_rules',
                    'v1_rules');
 
+eval "use Text::DoubleMetaphone qw(double_metaphone)";
+
+if ($@) {
+    @MATCH_LIST = grep !/metaphone/, @MATCH_LIST;
+}
+
 my $DEBUG_MSG = '';
 
 &gender_init();
@@ -533,14 +539,6 @@ sub one_only_metaphone {
 
     # Match one list only, use DoubleMetaphone
 
-    eval "use Text::DoubleMetaphone qw(double_metaphone)";
-
-    if ($@) {
-        $DEBUG_MSG .= "\tSkipping, Text::DoubleMetaphone not installed.\n"
-          if $DEBUG;
-        return $gender;
-    }
-
     my $meta_name = &double_metaphone($name);
     my $metaphone_hit = '';
 
@@ -599,14 +597,6 @@ sub either_weight_metaphone {
     my $gender = undef;
 
     # Match either, weight, use DoubleMetaphone
-
-    eval "use Text::DoubleMetaphone qw(double_metaphone)";
-
-    if ($@) {
-        $DEBUG_MSG .= "\tSkipping, Text::DoubleMetaphone not installed.\n"
-          if $DEBUG;
-        return $gender;
-    }
 
     my $meta_name = &double_metaphone($name);
 

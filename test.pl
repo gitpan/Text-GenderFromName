@@ -25,29 +25,32 @@ push @Text::GenderFromName::MATCH_LIST, 'main::user_sub';
 
 my @tests = @Text::GenderFromName::MATCH_LIST;
 
-# First of all, make sure we have the right number of match subs.
-
-ok(@tests == 7, 'Found all 7 match subs');
-
 # Test for Text::DoubleMetaphone. Skip those tests if not installed.
-
-my @skip;
 
 eval "require Text::DoubleMetaphone";
 
-if ($@) {
-    for (my $i = 0; $i < @tests; $i++) {
-        $skip[$i] = "Skipping $tests[$i]: required module not installed." if
-            $tests[$i] =~ /metaphone/;
+my %skip;
+
+if ($@) { 
+    my @metaphones = ('one_only_metaphone', 'either_weight_metaphone');
+
+    splice(@tests, 2, 0, @metaphones);
+
+    for (@metaphones) {
+        $skip{$_} = "Skipping $_: required module not installed.";
     }
 }
+
+# First of all, make sure we have the right number of match subs.
+
+ok(@tests == 7, 'Found all 7 match subs');
 
 for (my $i = 0; $i < @tests; $i++) {
     # Test just this one rule.
     @Text::GenderFromName::MATCH_LIST = ($tests[$i]);
 
-    # Skip if in @skip.
-    if ($skip[$i]) { ok(1, $skip[$i]); next; }
+    # Skip if in %skip.
+    if ($skip{$tests[$i]}) { ok(1, $skip{$tests[$i]}); next; }
 
     my $pos = &gender($names[$i]);
     my $neg = &gender($names[$i+1]);
