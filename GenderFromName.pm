@@ -17,7 +17,7 @@ use vars qw(@ISA @EXPORT @EXPORT_OK $VERSION);
 @ISA = qw(Exporter);
 @EXPORT = qw(&gender);
 @EXPORT_OK = qw(&gender_init);
-$VERSION = '0.30';
+$VERSION = '0.31';
 
 =head1 NAME
 
@@ -113,7 +113,7 @@ you should explicitly import:
 
 =over 4
 
-=item gender_init ($female_first_names_ref, $male_first_names_ref)
+=item gender_init ($female_names_ref, $male_names_ref)
 
 Initializes the male and female hashes. This package calls
 C<gender_init()> internally: without arguments it uses the table
@@ -336,6 +336,23 @@ Use female/male hash lists from a database:
                                    value    => 'weight'};
     &gender_init(\%females, \%males);
 
+=head1 COMPATIBILITY
+
+To run v0.30 in a (mostly) backward compatible mode, override the
+MATCH_LIST like so:
+
+    @Text::GenderFromName::MATCH_LIST = ('v2_rules', 'v1_rules');
+
+and set the looseness to any value greater than 1:
+
+    &gender($_, 9);
+
+Note that v0.30 uses significantly different lists than before. If
+you'd like to use the v0.20 name lists, you may download a previous
+version of C<Text::GenderFromName>, cut out the hashes, and use the
+&gender_init() function to use those lists instead. To minimize the
+size of this module, they are not included in this module.
+
 =head1 CAVEATS
 
 =head2 REGARDING THIS MODULE
@@ -516,7 +533,13 @@ sub one_only_metaphone {
 
     # Match one list only, use DoubleMetaphone
 
-    use Text::DoubleMetaphone qw(double_metaphone);
+    eval "use Text::DoubleMetaphone qw(double_metaphone)";
+
+    if ($@) {
+        $DEBUG_MSG .= "\tSkipping, Text::DoubleMetaphone not installed.\n"
+          if $DEBUG;
+        return $gender;
+    }
 
     my $meta_name = &double_metaphone($name);
     my $metaphone_hit = '';
@@ -577,7 +600,13 @@ sub either_weight_metaphone {
 
     # Match either, weight, use DoubleMetaphone
 
-    use Text::DoubleMetaphone qw(double_metaphone);
+    eval "use Text::DoubleMetaphone qw(double_metaphone)";
+
+    if ($@) {
+        $DEBUG_MSG .= "\tSkipping, Text::DoubleMetaphone not installed.\n"
+          if $DEBUG;
+        return $gender;
+    }
 
     my $meta_name = &double_metaphone($name);
 
