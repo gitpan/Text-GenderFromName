@@ -1,0 +1,19 @@
+Revision history for Perl extension Text::GenderFromName.
+
+0.2  Fri Oct 26 18:01:18 2001
+	- original version; created by h2xs 1.21 with options
+		-X -n Text::GenderFromName
+# Version 0.2.  Module list status is "Rdpf."
+#
+# Two big changes between this and version 0.1:
+#
+# First, the gender() subroutine now returns "m" if none of the rules 
+# trigger, instead of "undef".  This isn't meant to be sexist, but merely 
+# to reflect that the original rules were organized such that male names
+# were meant to "fall through" to the end.
+# 
+# Second, I've appended a big list of names that gets searched first.
+# This is counter to the spirit of the original code -- the whole point
+# was that it used heuristics to guess at the gender rather than a 
+# huge list of names.  But enough people have requested this that I 
+# decided to add in the huge list, disk space be darned.

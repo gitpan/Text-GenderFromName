@@ -1,0 +1,63 @@
+=head1 NAME
+
+C<Text::GenderFromName> - Guess the gender of a "Christian" first name.
+
+=head1 SYNOPSIS
+
+    use Text::GenderFromName;
+ 
+    print gender("Jon");    # prints "m"
+
+Text::GenderFromName is available at a CPAN site near you.
+
+=head1 DESCRIPTION
+
+This module provides a lone function: C<gender()>, which returns
+one of three values: "m" for male, "f" for female", or UNDEF if
+it doesn't know.  For instance, gender("Chris") is UNDEF.
+
+The original code assumed a default of male, and I am happy to
+contribute to the destruction of the oppressive Patriarchy by
+returning an UNDEF value if no rule triggers.  Ha ha!  Seriously, it'll
+be useful to know when C<gender()> has no clue.
+
+For the curious, I ran Text::GenderFromName on The Perl Journal's
+subscriber list.  The result?  
+
+   Male:    68%
+   Female:  32%
+
+=head1 BUGS
+
+C<gender()> can never be perfect.  
+
+With the addition of the huge word lists, some of the regex rules are
+now redundant, so gender() may take several more milliseconds to
+return than it could.
+
+I'm sure that many of these rules could return immediately upon
+firing.  However, the original author arranged them in a very
+deliberate order, with more specific rules at the end overruling
+earlier rules.  Consequently, I can't turn all of these rules into the
+speedier form C<return "f" if /.../> without throwing away the meaning
+of the ordering.  
+
+The rules should probably be made case-insensitive, but I bet there's
+some funky situation in which that'll lose.
+
+=head1 AUTHOR
+
+Jon Orwant
+
+Readable Publications, Inc.
+
+orwant@readable.com
+
+This is an adaptation of an 8/91 awk script by Scott Pakin in the
+December 91 issue of Computer Language Monthly.
+
+Small contributions by Andrew Langmead and John Strickler.  Thanks 
+to Bob Baldwin, Matt Bishop, and Daniel Klein for their lists of names.
+
+=cut
+
