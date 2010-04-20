@@ -1,5 +1,10 @@
 Revision history for Perl extension Text::GenderFromName.
 
+0.33 Tue Apr 20 15:07:51 CDT 2010
+
+# Wow. People still use this! Fixed Makefile.PL to allow automated
+# smoke tests.
+
 0.30 Wed Jul 30 14:56:32 CDT 2003
 
 # Version 0.30 is a significant departure from previous versions. By

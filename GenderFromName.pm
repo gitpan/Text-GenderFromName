@@ -17,7 +17,7 @@ use vars qw(@ISA @EXPORT @EXPORT_OK $VERSION);
 @ISA = qw(Exporter);
 @EXPORT = qw(&gender);
 @EXPORT_OK = qw(&gender_init);
-$VERSION = '0.32';
+$VERSION = '0.33';
 
 =head1 NAME
 

@@ -41,11 +41,7 @@ matching. See the perldoc for this module for details.
 
 END_OF_WARNING
 
-    print 'Would you like me to make Text::DoubleMetaphone a prerequisite for
-this module [Y/n]? ';
-
-    my $x = <STDIN>;
-    chomp $x;
+    my $x = prompt('Would you like me to make Text::DoubleMetaphone a prerequisite for this module [Y/n]? ');
     $opts{'PREREQ_PM'} = { 'Text::DoubleMetaphone' => '0.05' } if $x ne 'n';
 }
 
